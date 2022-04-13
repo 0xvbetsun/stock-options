@@ -5,11 +5,6 @@
 	</h1>
 </div>
 
-## License
-
-Golang Stock Options Calculator is provided under the [MIT License](LICENSE)
-
-## Project status
 
 ![Build Status](https://github.com/vbetsun/stock-options/workflows/CI/badge.svg)
 [![GoReport](https://goreportcard.com/badge/github.com/vbetsun/stock-options)](https://goreportcard.com/report/github.com/vbetsun/stock-options)
@@ -37,12 +32,22 @@ import (
 )
 
 func main() {
-	var strike, premium float64 = 50, 10
+	var strike, stock, premium float64 = 50, 70, 10
 	bep, err := so.BreakEvenPoint(so.Call, strike, premium)
 	if err != nil {
 		// handle error
 	}
 	fmt.Printf("%.2f", bep)
 	// Output: 60.00
+	payoff, err := PayoffFromBuying(Call, strike, stock, premium)
+	if err != nil {
+		// handle error
+	}
+	fmt.Printf("%.2f", payoff)
+	// Output: 10.00
 }
 ```
+
+## License
+
+Golang Stock Options Calculator is provided under the [MIT License](LICENSE)
