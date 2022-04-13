@@ -1,3 +1,4 @@
+// Package calculator provides basic constants and mathematical functions for stock options.
 package calculator
 
 import (
@@ -7,11 +8,13 @@ import (
 
 type Option int
 
+// Option types
 const (
 	Call Option = iota
 	Put
 )
 
+// Validation errors
 var (
 	ErrInvalidStrike       = errors.New("calculator: strike should be >= 0")
 	ErrInvalidStoke        = errors.New("calculator: stoke should be >= 0")
@@ -23,16 +26,18 @@ var (
 )
 
 type BlackScholesModel struct {
-	Option
-	Strike       float64
-	Stock        float64
-	InterestRate float64
-	Volatility   float64
-	TimeToExpire float64
-	Dividend     float64
+	Option               // option type (call or put)
+	Strike       float64 // strike price ($$$ per share)
+	Stock        float64 // underlying price ($$$ per share)
+	InterestRate float64 // continuously compounded risk-free interest rate (% p.a.)
+	Volatility   float64 // volatility (% p.a.)
+	TimeToExpire float64 // time to expiration (% of year)
+	Dividend     float64 // continuously compounded dividend yield (% p.a.)
 }
 
-func (bsm BlackScholesModel) Price() (float64, error) {
+// Price calculates by solving the equation for the corresponding terminal and boundary conditions
+// for more details see https://en.wikipedia.org/wiki/Black-Scholes_model
+func (bsm *BlackScholesModel) Price() (float64, error) {
 	if bsm.Strike < 0 {
 		return 0, ErrInvalidStrike
 	}
@@ -59,6 +64,11 @@ func (bsm BlackScholesModel) Price() (float64, error) {
 	return bsm.Strike*math.Pow(math.E, -bsm.InterestRate*bsm.TimeToExpire)*normDist(-d2) - bsm.Stock*math.Pow(math.E, -bsm.Dividend*bsm.TimeToExpire)*normDist(-d1), nil
 }
 
+// BreakEvenPoint calculates price in the underlying asset at which exercise/dispose
+// of the contract without incurring a loss
+//
+// It takes strike price (str) and premium (pr) in $$$ per share and returns break-even point
+// regarding to the option type (opt)
 func BreakEvenPoint(opt Option, str, pr float64) (float64, error) {
 	if str < 0 {
 		return 0, ErrInvalidStrike
@@ -73,6 +83,10 @@ func BreakEvenPoint(opt Option, str, pr float64) (float64, error) {
 	return str - pr, nil
 }
 
+// PayoffFromBuying calculates current market price of an option ($$$ per share) from buying
+//
+// It takes strike price (str), stock (st) and premium (pr) in $$$ per share and returns profit/lose
+// from buying options regarding to the option  type (opt)
 func PayoffFromBuying(opt Option, str, st, pr float64) (float64, error) {
 	if str < 0 {
 		return 0, ErrInvalidStrike
@@ -89,6 +103,10 @@ func PayoffFromBuying(opt Option, str, st, pr float64) (float64, error) {
 	return math.Max(str-st, 0) - pr, nil
 }
 
+// PayoffFromSelling calculates current market price of an option ($$$ per share) from selling
+//
+// It takes strike price (str), stock (st) and premium (pr) in $$$ per share and returns profit/lose
+// from selling options regarding to the option type (opt)
 func PayoffFromSelling(opt Option, str, st, pr float64) (float64, error) {
 	if str < 0 {
 		return 0, ErrInvalidStrike

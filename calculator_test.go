@@ -1,9 +1,30 @@
 package calculator
 
 import (
+	"fmt"
 	"math"
 	"testing"
 )
+
+func ExampleBreakEvenPoint_call() {
+	var strike, premium float64 = 50, 10
+	bep, err := BreakEvenPoint(Call, strike, premium)
+	if err != nil {
+		// handle error
+	}
+	fmt.Printf("%.2f", bep)
+	// Output: 60.00
+}
+
+func ExampleBreakEvenPoint_put() {
+	var strike, premium float64 = 50, 10
+	bep, err := BreakEvenPoint(Put, strike, premium)
+	if err != nil {
+		// handle error
+	}
+	fmt.Printf("%.2f", bep)
+	// Output: 40.00
+}
 
 func TestBreakEvenPoint(t *testing.T) {
 	type args struct {
@@ -36,6 +57,26 @@ func TestBreakEvenPoint(t *testing.T) {
 			}
 		})
 	}
+}
+
+func ExamplePayoffFromBuying_call() {
+	var strike, stock, premium float64 = 50, 70, 10
+	payoff, err := PayoffFromBuying(Call, strike, stock, premium)
+	if err != nil {
+		// handle error
+	}
+	fmt.Printf("%.2f", payoff)
+	// Output: 10.00
+}
+
+func ExamplePayoffFromBuying_put() {
+	var strike, stock, premium float64 = 50, 30, 10
+	payoff, err := PayoffFromBuying(Put, strike, stock, premium)
+	if err != nil {
+		// handle error
+	}
+	fmt.Printf("%.2f", payoff)
+	// Output: 10.00
 }
 
 func TestPayoffFromBuying(t *testing.T) {
@@ -77,6 +118,26 @@ func TestPayoffFromBuying(t *testing.T) {
 	}
 }
 
+func ExamplePayoffFromSelling_call() {
+	var strike, stock, premium float64 = 50, 40, 10
+	payoff, err := PayoffFromSelling(Call, strike, stock, premium)
+	if err != nil {
+		// handle error
+	}
+	fmt.Printf("%.2f", payoff)
+	// Output: 10.00
+}
+
+func ExamplePayoffFromSelling_put() {
+	var strike, stock, premium float64 = 50, 70, 10
+	payoff, err := PayoffFromSelling(Put, strike, stock, premium)
+	if err != nil {
+		// handle error
+	}
+	fmt.Printf("%.2f", payoff)
+	// Output: 10.00
+}
+
 func TestPayoffFromSelling(t *testing.T) {
 	type args struct {
 		opt Option
@@ -116,6 +177,42 @@ func TestPayoffFromSelling(t *testing.T) {
 			}
 		})
 	}
+}
+
+func ExampleBlackScholesModel_Price_call() {
+	bsm := BlackScholesModel{
+		Option:       Call,
+		Strike:       58,
+		Stock:        60,
+		InterestRate: 0.035,
+		Volatility:   0.2,
+		TimeToExpire: 0.5,
+		Dividend:     0.0125,
+	}
+	price, err := bsm.Price()
+	if err != nil {
+		// handle error
+	}
+	fmt.Printf("%.4f", price)
+	// Output: 4.6245
+}
+
+func ExampleBlackScholesModel_Price_put() {
+	bsm := BlackScholesModel{
+		Option:       Put,
+		Strike:       58,
+		Stock:        60,
+		InterestRate: 0.035,
+		Volatility:   0.2,
+		TimeToExpire: 0.5,
+		Dividend:     0.0125,
+	}
+	price, err := bsm.Price()
+	if err != nil {
+		// handle error
+	}
+	fmt.Printf("%.4f", price)
+	// Output: 1.9922
 }
 
 func TestBlackScholesModel_Price(t *testing.T) {
