@@ -25,7 +25,7 @@ jobs:
           install-go: false
           cache-key: ${{ matrix.go }}
       - name: Upload coverage report
-        uses: codecov/codecov-action@v1.0.2
+        uses: codecov/codecov-action@v2
         with:
           file: ./coverage.txt
           flags: unittests
