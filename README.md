@@ -7,14 +7,16 @@
 
 
 ![Build Status](https://github.com/vbetsun/stock-options/workflows/CI/badge.svg)
+[![coverage](https://codecov.io/gh/vbetsun/stock-options/branch/master/graph/badge.svg)](https://codecov.io/gh/vbetsun/stock-options)
 [![GoReport](https://goreportcard.com/badge/github.com/vbetsun/stock-options)](https://goreportcard.com/report/github.com/vbetsun/stock-options)
+![license](https://img.shields.io/github/license/vbetsun/stock-options)
 [![GoDoc](https://pkg.go.dev/badge/github.com/vbetsun/stock-options)](https://pkg.go.dev/github.com/vbetsun/stock-options)
 
 ## Install
 
 ```sh
 # Go 1.16+
-go install  github.com/vbetsun/stock-options@latest
+go install github.com/vbetsun/stock-options@latest
 
 # Go version < 1.16
 go get -u github.com/vbetsun/stock-options 

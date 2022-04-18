@@ -17,10 +17,16 @@ jobs:
       - uses: WillAbides/setup-go-faster@v1.7.0
         with:
           go-version: ${{ matrix.go }}
-      - run: "go test ./..."
       - run: "go vet ./..."
+      - run: "go test ./... -race -coverprofile=coverage.txt -covermode=atomic"
       - uses: dominikh/staticcheck-action@v1.1.0
         with:
           version: "2021.1.1"
           install-go: false
           cache-key: ${{ matrix.go }}
+      - name: Upload coverage report
+        uses: codecov/codecov-action@v1.0.2
+        with:
+          file: ./coverage.txt
+          flags: unittests
+          name: codecov-umbrella
