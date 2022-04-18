@@ -41,7 +41,7 @@ func main() {
 	}
 	fmt.Printf("%.2f", bep)
 	// Output: 60.00
-	payoff, err := PayoffFromBuying(Call, strike, stock, premium)
+	payoff, err := so.PayoffFromBuying(so.Call, strike, stock, premium)
 	if err != nil {
 		// handle error
 	}
