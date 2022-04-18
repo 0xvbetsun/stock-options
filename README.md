@@ -7,7 +7,7 @@
 
 
 ![Build Status](https://github.com/vbetsun/stock-options/workflows/CI/badge.svg)
-[![coverage](https://codecov.io/gh/vbetsun/stock-options/branch/master/graph/badge.svg)](https://codecov.io/gh/vbetsun/stock-options)
+[![coverage](https://codecov.io/gh/vbetsun/stock-options/branch/main/graph/badge.svg)](https://codecov.io/gh/vbetsun/stock-options)
 [![GoReport](https://goreportcard.com/badge/github.com/vbetsun/stock-options)](https://goreportcard.com/report/github.com/vbetsun/stock-options)
 ![license](https://img.shields.io/github/license/vbetsun/stock-options)
 [![GoDoc](https://pkg.go.dev/badge/github.com/vbetsun/stock-options)](https://pkg.go.dev/github.com/vbetsun/stock-options)
